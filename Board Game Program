@@ -1,0 +1,30 @@
+from collections import deque
+def min_moves_to_reach_destination(M, N, grid, source, destination, move_rule):
+dx, dy = move_rule
+    directions = [(dx, dy), (dy, -dx), (-dy, dx), (-dx, -dy)]
+        queue = deque([(source[0], source[1], 0)])  # (row, col, steps)
+    visited = set([(source[0], source[1])])
+    while queue:
+        x, y, steps = queue.popleft()
+                if (x, y) == destination:
+            return steps
+                for d in directions:
+            nx, ny = x + d[0], y + d[1]
+                        if 0 <= nx < M and 0 <= ny < N and grid[nx][ny] == 0 and (nx, ny) not in visited:
+                visited.add((nx, ny))
+                queue.append((nx, ny, steps + 1))
+        return -1
+M, N = 6, 6
+grid = [
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1],
+    [0, 1, 0, 0, 0, 0],
+    [1, 1, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 0, 1, 0]
+]
+source = (1, 0)
+destination = (5, 3)
+move_rule = (1, 2)
+result = min_moves_to_reach_destination(M, N, grid, source, destination, move_rule)
+print(result)
